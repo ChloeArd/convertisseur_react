@@ -52,6 +52,7 @@ export const Converter = function (props) {
                 <div className="flexColumn">
                     <input id="startValue" {...register("startValue", {required : true})} />
                     <select id="startUnity" {...register("startUnity")} onChange={e => setUnity2(e.target.value)}>
+                        <option></option>
                         {props.unity.map(value => <option value={value}>{value}</option>)}
                     </select>
                 </div>
