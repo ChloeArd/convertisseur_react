@@ -70,7 +70,6 @@ export const Converter = function (props) {
             <input id="submit" type="submit" value="Valider" />
             <button id="reset" onClick={onReset}>Réinitialiser</button>
         </form>
-
     );
 }
 
