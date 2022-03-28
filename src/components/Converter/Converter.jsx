@@ -1,9 +1,9 @@
 import "./Converter.css";
 import {useForm} from "react-hook-form";
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 import {useEffect, useState} from "react";
 
-export const Converter = function ({unity, setUnity}) {
+export const Converter = function (props) {
     const { register, handleSubmit } = useForm();
 
     function onSubmit(data) {
@@ -52,13 +52,14 @@ export const Converter = function ({unity, setUnity}) {
                 <div className="flexColumn">
                     <input id="startValue" {...register("startValue", {required : true})} />
                     <select id="startUnity" {...register("startUnity")} onChange={e => setUnity2(e.target.value)}>
-                        {unity.map(value => <option value={value}>{value}</option>)}
+                        <option value="">{props.unity}</option>
+                        {props.unity.map(value => <option value={value}>{value}</option>)}
                     </select>
                 </div>
                 <div className="flexColumn">
                     <input id="convertedValue" {...register("convertedValue")} readOnly={true}/>
                     <select id="endUnity" {...register("endUnity")} >
-                        {unity
+                        {props.unity
                             .filter(value => unity2.charAt(unity2.length-1) === value.charAt(value.length-1) )
                             .map(value => <option value={value}>{value}</option>)
                         }
@@ -68,9 +69,10 @@ export const Converter = function ({unity, setUnity}) {
             <input id="submit" type="submit" value="Valider" />
             <button id="reset" onClick={onReset}>Réinitialiser</button>
         </form>
+
     );
 }
 
 Converter.propTypes = {
-
-}
+    unity: PropTypes.array.isRequired
+};
