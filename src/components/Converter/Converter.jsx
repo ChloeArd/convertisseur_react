@@ -7,6 +7,11 @@ export const Converter = function (props) {
     const { register, handleSubmit } = useForm();
 
     function onSubmit(data) {
+        if (isNaN(document.getElementById("startValue").value)) {
+            alert("Veuillez entrer un nombre");
+            window.location.reload();
+        }
+
         // eslint-disable-next-line no-mixed-operators
         if (data.startUnity === "m" && data.endUnity === "cm" || data.startUnity === "dm" && data.endUnity === "mm" || data.startUnity === "l" && data.endUnity === "cml" || data.startUnity === "dl" && data.endUnity === "ml") {
             document.getElementById("convertedValue").value = parseFloat(data.startValue) * 100;
@@ -31,10 +36,6 @@ export const Converter = function (props) {
         else if (data.startUnity === "mm" && data.endUnity === "m" || data.startUnity === "ml" && data.endUnity === "l") {
             document.getElementById("convertedValue").value = parseFloat(data.startValue) / 1000;
         }
-        else {
-            alert("La valeur n'est pas un nombre");
-            window.location.reload();
-        }
     }
 
     function onReset() {
@@ -52,7 +53,7 @@ export const Converter = function (props) {
                 <div className="flexColumn">
                     <input id="startValue" {...register("startValue", {required : true})} />
                     <select id="startUnity" {...register("startUnity")} onChange={e => setUnity2(e.target.value)}>
-                        <option></option>
+                        <option>Sélectionner</option>
                         {props.unity.map(value => <option value={value}>{value}</option>)}
                     </select>
                 </div>
