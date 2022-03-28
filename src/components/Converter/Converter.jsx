@@ -1,11 +1,10 @@
 import "./Converter.css";
-import {set, useForm} from "react-hook-form";
+import {useForm} from "react-hook-form";
 import PropTypes from "prop-types";
 import {useEffect, useState} from "react";
 
 export const Converter = function ({unity, setUnity}) {
     const { register, handleSubmit } = useForm();
-
 
     function onSubmit(data) {
         // eslint-disable-next-line no-mixed-operators
@@ -32,11 +31,10 @@ export const Converter = function ({unity, setUnity}) {
         else if (data.startUnity === "mm" && data.endUnity === "m" || data.startUnity === "ml" && data.endUnity === "l") {
             document.getElementById("convertedValue").value = parseFloat(data.startValue) / 1000;
         }
-    }
-
-    function onChangeUnity(e) {
-        console.log(e.target.value);
-        return e.target.value;
+        else {
+            alert("La valeur n'est pas un nombre");
+            window.location.reload();
+        }
     }
 
     function onReset() {
@@ -67,8 +65,6 @@ export const Converter = function ({unity, setUnity}) {
                     </select>
                 </div>
             </div>
-
-
             <input id="submit" type="submit" value="Valider" />
             <button id="reset" onClick={onReset}>Réinitialiser</button>
         </form>
