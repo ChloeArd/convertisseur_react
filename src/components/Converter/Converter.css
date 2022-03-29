@@ -1,4 +1,4 @@
-form {
+#Converter {
     width: 50%;
     border: 1px solid gainsboro;
     border-radius: 5px;
@@ -29,7 +29,7 @@ select {
     margin-bottom: 15px;
 }
 
-input[type='submit'], #reset {
+#submit, #reset {
     border-radius: 10px;
     background-color: #2864e7;
     color: white;
@@ -40,7 +40,7 @@ input[type='submit'], #reset {
     border: none;
 }
 
-input[type='submit']:hover {
+#submit:hover {
     background-color: #1e4aa9;
 }
 

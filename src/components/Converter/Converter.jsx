@@ -1,75 +1,71 @@
 import "./Converter.css";
-import {useForm} from "react-hook-form";
 import PropTypes from 'prop-types';
 import {useEffect, useState} from "react";
 
 export const Converter = function (props) {
-    const { register, handleSubmit } = useForm();
 
-    function onSubmit(data) {
-        if (isNaN(document.getElementById("startValue").value)) {
+    const [startValue, setStartValue] = useState('');
+
+    const [startUnity, setStartUnity] = useState("");
+    useEffect( () => {
+        return startUnity;
+    }, [startUnity]);
+
+    const [endUnity, setEndUnity] = useState("");
+    useEffect( () => {
+        return endUnity;
+    }, [endUnity]);
+
+    function onSubmit() {
+        if (isNaN(document.getElementById("startValue").value) || document.getElementById("startValue").value === "") {
             alert("Veuillez entrer un nombre");
             window.location.reload();
         }
 
-        // eslint-disable-next-line no-mixed-operators
-        if (data.startUnity === "m" && data.endUnity === "cm" || data.startUnity === "dm" && data.endUnity === "mm" || data.startUnity === "l" && data.endUnity === "cml" || data.startUnity === "dl" && data.endUnity === "ml") {
-            document.getElementById("convertedValue").value = parseFloat(data.startValue) * 100;
+        if (startUnity === "m" && endUnity === "cm" || startUnity === "dm" && endUnity === "mm" || startUnity === "l" && endUnity === "cml" || startUnity === "dl" && endUnity === "ml") {
+            document.getElementById("convertedValue").value = parseFloat(startValue) * 100;
         }
-        // eslint-disable-next-line no-mixed-operators
-        else if (data.startUnity === "m" && data.endUnity === "dm" || data.startUnity === "dm" && data.endUnity === "cm" || data.startUnity === "cm" && data.endUnity === "mm" || data.startUnity === "l" && data.endUnity === "dl" || data.startUnity === "dl" && data.endUnity === "cl" || data.startUnity === "cl" && data.endUnity === "ml") {
-            document.getElementById("convertedValue").value = parseFloat(data.startValue) * 10;
+        else if (startUnity === "m" && endUnity === "dm" || startUnity === "dm" && endUnity === "cm" || startUnity === "cm" && endUnity === "mm" || startUnity === "l" && endUnity === "dl" || startUnity === "dl" && endUnity === "cl" || startUnity === "cl" && endUnity === "ml") {
+            document.getElementById("convertedValue").value = parseFloat(startValue) * 10;
         }
-        // eslint-disable-next-line no-mixed-operators
-        else if (data.startUnity === "m" && data.endUnity === "mm" || data.startUnity === "l" && data.endUnity === "ml") {
-            document.getElementById("convertedValue").value = parseFloat(data.startValue) * 1000;
+        else if (startUnity === "m" && endUnity === "mm" || startUnity === "l" && endUnity === "ml") {
+            document.getElementById("convertedValue").value = parseFloat(startValue) * 1000;
         }
-        // eslint-disable-next-line no-mixed-operators
-        else if (data.startUnity === "cm" && data.endUnity === "m" || data.startUnity === "mm" && data.endUnity === "dm" || data.startUnity === "cl" && data.endUnity === "l" || data.startUnity === "ml" && data.endUnity === "dl") {
-            document.getElementById("convertedValue").value = parseFloat(data.startValue) / 100;
+        else if (startUnity === "cm" && endUnity === "m" || startUnity === "mm" && endUnity === "dm" || startUnity === "cl" && endUnity === "l" || startUnity === "ml" && endUnity === "dl") {
+            document.getElementById("convertedValue").value = parseFloat(startValue) / 100;
         }
-        // eslint-disable-next-line no-mixed-operators
-        else if (data.startUnity === "dm" && data.endUnity === "m" || data.startUnity === "cm" && data.endUnity === "dm" || data.startUnity === "mm" && data.endUnity === "cm" || data.startUnity === "dl" && data.endUnity === "l" || data.startUnity === "cl" && data.endUnity === "dl" || data.startUnity === "ml" && data.endUnity === "cl") {
-            document.getElementById("convertedValue").value = parseFloat(data.startValue) / 10;
+        else if (startUnity === "dm" && endUnity === "m" || startUnity === "cm" && endUnity === "dm" || startUnity === "mm" && endUnity === "cm" || startUnity === "dl" && endUnity === "l" || startUnity === "cl" && endUnity === "dl" || startUnity === "ml" && endUnity === "cl") {
+            document.getElementById("convertedValue").value = parseFloat(startValue) / 10;
         }
-        // eslint-disable-next-line no-mixed-operators
-        else if (data.startUnity === "mm" && data.endUnity === "m" || data.startUnity === "ml" && data.endUnity === "l") {
-            document.getElementById("convertedValue").value = parseFloat(data.startValue) / 1000;
+        else if (startUnity === "mm" && endUnity === "m" || startUnity === "ml" && endUnity === "l") {
+            document.getElementById("convertedValue").value = parseFloat(startValue) / 1000;
         }
     }
-
-    function onReset() {
-        window.location.reload();
-    }
-
-    const [unity2, setUnity2] = useState("");
-    useEffect( () => {
-        return unity2;
-    }, [unity2]);
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <div id="Converter">
             <div className="flexRow">
                 <div className="flexColumn">
-                    <input id="startValue" {...register("startValue", {required : true})} />
-                    <select id="startUnity" {...register("startUnity")} onChange={e => setUnity2(e.target.value)}>
+                    <input id="startValue" name="startValue" onChange={e => setStartValue(e.target.value)} />
+                    <select id="startUnity" name="startUnity" onChange={e => setStartUnity(e.target.value)}>
                         <option>Sélectionner</option>
                         {props.unity.map(value => <option value={value}>{value}</option>)}
                     </select>
                 </div>
                 <div className="flexColumn">
-                    <input id="convertedValue" {...register("convertedValue")} readOnly={true}/>
-                    <select id="endUnity" {...register("endUnity")} >
+                    <input id="convertedValue" name="convertedValue" readOnly={true}/>
+                    <select id="endUnity" name="endUnity" onChange={e => setEndUnity(e.target.value)}>
+                        {startUnity !== "" ? <option>Sélectionner</option> : ""}
                         {props.unity
-                            .filter(value => unity2.charAt(unity2.length-1) === value.charAt(value.length-1) )
+                            .filter(value => startUnity.charAt(startUnity.length-1) === value.charAt(value.length-1) )
                             .map(value => <option value={value}>{value}</option>)
                         }
                     </select>
                 </div>
             </div>
-            <input id="submit" type="submit" value="Valider" />
-            <button id="reset" onClick={onReset}>Réinitialiser</button>
-        </form>
+            <button id="submit" onClick={onSubmit}>Valider</button>
+            <button id="reset" onClick={() => window.location.reload()}>Réinitialiser</button>
+        </div>
     );
 }
 
